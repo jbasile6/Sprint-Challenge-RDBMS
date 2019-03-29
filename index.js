@@ -28,6 +28,23 @@ server.post('/api/projects', (req, res) => {
         .catch(err => res.status(500).json(err));
 })
 
+//GET project by id that also shows actions
+server.get('/api/projects/:id', (req, res) => {
+    const projId = req.params.id;
+
+    db('projects')
+        .where({id: projId})
+        .first()
+        .then(proj => {
+            db('actions')
+                .where({ project_id: projId })
+                .first()
+                .then( actions => res.status(200).json({...proj, actions}))
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+
 //GET all actions
 server.get('/api/actions', (req, res) => {
     db('actions')
@@ -35,13 +52,15 @@ server.get('/api/actions', (req, res) => {
         .catch(err => res.status(500).json(err));
 })
 
-//Post a new project
+//Post a new action
 server.post('/api/actions', (req, res) => {
     db('actions')
         .insert(req.body)
         .then( action => res.status(201).json(action))
         .catch(err => res.status(500).json(err));
 })
+
+
 
 const port = 5000;
 
