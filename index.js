@@ -28,6 +28,21 @@ server.post('/api/projects', (req, res) => {
         .catch(err => res.status(500).json(err));
 })
 
+//GET all actions
+server.get('/api/actions', (req, res) => {
+    db('actions')
+        .then(actions => res.status(200).json(actions))
+        .catch(err => res.status(500).json(err));
+})
+
+//Post a new project
+server.post('/api/actions', (req, res) => {
+    db('actions')
+        .insert(req.body)
+        .then( action => res.status(201).json(action))
+        .catch(err => res.status(500).json(err));
+})
+
 const port = 5000;
 
 server.listen(port, () => {
