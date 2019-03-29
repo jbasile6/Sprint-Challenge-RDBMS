@@ -7,7 +7,7 @@ server.use(express.json());
 server.use(helmet());
 
 
-
+const db = require('./data/dbConfig');
 
 const port = 5000;
 
