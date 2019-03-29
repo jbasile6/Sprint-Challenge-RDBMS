@@ -38,7 +38,6 @@ server.get('/api/projects/:id', (req, res) => {
         .then(proj => {
             db('actions')
                 .where({ project_id: projId })
-                .first()
                 .then( actions => res.status(200).json({...proj, actions}))
         })
         .catch(err => res.status(500).json(err));
